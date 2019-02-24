@@ -53,46 +53,24 @@ public class MagicSquareController {
      * @param: A ActionEvent that represent the event. event!=null;
      */
     public void buttonAction(ActionEvent event) {
-    	try {
-    		grid.getChildren().clear();
-        	grid.getColumnConstraints().add(new ColumnConstraints(15));
-        	grid.getRowConstraints().add(new RowConstraints(15));
-        	grid.setAlignment(Pos.CENTER);
-        	boolean flag=true;
-        	String startD=start.getValue();
-        	 MouseEvent m = null;
-        	boolean inFlag=items(m,startD);
-            int num=Integer.parseInt(txtorder.getText());      
-            String directionW=direction.getValue();
-            
-            if(num%2==0) {
-            	flag=false;
-            	Alert alert = new Alert(AlertType.INFORMATION, "Incorrect", ButtonType.OK);
-            	alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-            	alert.show();
-            	txtorder.setText("");
-            } 
-            if(flag==true && inFlag==true) {
-            	int[][]ma=objectMG.createdSquare(num,directionW,startD);
-             	for (int rowIndex = 0; rowIndex < num; rowIndex++) { 
-             	   for (int colIndex = 0; colIndex < num; colIndex++) {  
-             		 int n=ma[rowIndex][colIndex];
-             		 Button lab = new Button(""+n); 
-             		 lab.setStyle("-fx-border-color: Black; -fx-fond-size: 10;-fx-background-color: LightGray;");
-             		 GridPane.setConstraints(lab, colIndex, rowIndex, 1, 1);
-             		 grid.getChildren().addAll(lab);
-             	    
-             	   }
-             	}
-             	direction.getItems().clear();
-             	direction.setVisible(false);
-             	buttonCreate.setText("Continue");
-             	buttonCreate.setStyle("-fx-background-color: Red");
-            }
-    	}catch(NullPointerException e) {
-    		System.out.println("No influye en el desarrollo optimo del programa");
-    	}
-    	
+    	    try {
+    		    develop();               
+    	    }catch(NullPointerException e) {
+    		    System.out.println("not a problem for the correct develop of the program");
+    	    }catch(NumberFormatException e) {
+    	    	Alert alert = new Alert(AlertType.WARNING, "The value need a Int not other kind of Input", ButtonType.OK);
+       	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+       	        alert.show();
+       	        change();
+       	        txtorder.setText("");
+    	    }catch(NegativeArraySizeException e) {
+    	    	Alert alert = new Alert(AlertType.WARNING, "Wrong value only positive values ", ButtonType.OK);
+       	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+       	        alert.show();
+       	        txtorder.setText("");
+       	        change();
+    	    }
+    
        
     }
     @FXML
@@ -140,5 +118,46 @@ public class MagicSquareController {
         buttonCreate.setStyle("-fx-background-color: LightGreen");
         return go;
     }
-
+    public void change() {
+    	direction.getItems().clear();
+ 	    direction.setVisible(false);
+ 	    buttonCreate.setText("Continue");
+ 	    buttonCreate.setStyle("-fx-background-color: Red"); 
+    }
+    public void setting() {
+    	 grid.getChildren().clear();
+	     grid.getColumnConstraints().add(new ColumnConstraints(15));
+	     grid.getRowConstraints().add(new RowConstraints(15));
+	     grid.setAlignment(Pos.CENTER);
+    }
+    public void develop() {
+    	setting();
+	     boolean flag=true;
+	     String startD=start.getValue();
+	     MouseEvent m = null;
+	     boolean inFlag=items(m,startD);
+        int num=Integer.parseInt(txtorder.getText());      
+        String directionW=direction.getValue();           
+        if(num%2==0) {
+   	     flag=false;
+   	     Alert alert = new Alert(AlertType.WARNING, "Incorrect", ButtonType.OK);
+   	     alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+   	     alert.show();
+   	     txtorder.setText("");
+        } 
+        if(flag==true && inFlag==true) {
+   	    int[][]ma=objectMG.createdSquare(num,directionW,startD);
+    	    for (int rowIndex = 0; rowIndex < num; rowIndex++) { 
+    	        for (int colIndex = 0; colIndex < num; colIndex++) {  
+    		       int n=ma[rowIndex][colIndex];
+    		       Button lab = new Button(""+n); 
+    		       lab.setStyle("-fx-border-color: Black; -fx-fond-size: 10;-fx-background-color: LightGray;");
+    		       GridPane.setConstraints(lab, colIndex, rowIndex, 1, 1);
+    		       grid.getChildren().addAll(lab);
+    	    
+    	        }
+    	    }
+    	    change();
+       }
+    }
 }

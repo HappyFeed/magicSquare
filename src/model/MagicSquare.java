@@ -14,7 +14,7 @@ public class MagicSquare {
 	 * @param: A String ubication that represent the way to fill the MagicSquare. ubication!=null;
 	 * @param: A String sence that represent the position to start the fill of the MagicSquare. sence!=null;
 	 */
-	public int[][] createdSquare(int size,String ubication,String sence) {		
+	public int[][] createdSquare(int size,String ubication,String sence) throws NumberFormatException, NegativeArraySizeException{		
         int[][] magicSquare = new int[size][size];
 		
 		int row= size;
