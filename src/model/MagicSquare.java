@@ -229,4 +229,5 @@ public class MagicSquare {
 			}
 	   return magicSquare;
 	}	
-    }
+    
+}

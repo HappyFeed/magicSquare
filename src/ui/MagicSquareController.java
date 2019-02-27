@@ -34,6 +34,9 @@ public class MagicSquareController {
     private Button buttonCreate;
 
     @FXML
+    private Button firstButton;
+    
+    @FXML
     private TextField txtorder;
 
     @FXML
@@ -79,6 +82,7 @@ public class MagicSquareController {
      */
     void initialize() {
     	direction.setVisible(false);
+    	buttonCreate.setVisible(false);
     	objectMG = new MagicSquare();
         start.getItems().add("Up");
         start.getItems().add("Right");
@@ -87,7 +91,18 @@ public class MagicSquareController {
         buttonCreate.setText("Continue");
    
     }
-
+    @FXML
+    public void firstInputs(ActionEvent event) {
+    	try {
+    		buttonCreate.setVisible(true);
+        	String startD=start.getValue();
+        	items(startD);
+        	firstButton.setVisible(false);
+    	}catch(NullPointerException e) {
+    		System.err.println("Please put a input to continue");
+    	}
+    	
+    }
     /*The method is in charge to add items to the direction comboBox
     *<b>pre:</b>mouse event started.
     *<b>post:</b>items added to direction comboBox.
@@ -96,7 +111,7 @@ public class MagicSquareController {
     *
     *@return: A boolean that say if the method was correctly develop.
     */
-    public boolean items(MouseEvent ivent, String option) {
+    public boolean items( String option) {
     	boolean go=false;
     	direction.setVisible(true);
         if(option.equals("Up")) {
@@ -121,8 +136,8 @@ public class MagicSquareController {
     public void change() {
     	direction.getItems().clear();
  	    direction.setVisible(false);
- 	    buttonCreate.setText("Continue");
- 	    buttonCreate.setStyle("-fx-background-color: Red"); 
+ 	    buttonCreate.setVisible(false);
+ 	    firstButton.setVisible(true); 
     }
     public void setting() {
     	 grid.getChildren().clear();
@@ -132,10 +147,8 @@ public class MagicSquareController {
     }
     public void develop() {
     	setting();
-	     boolean flag=true;
-	     String startD=start.getValue();
-	     MouseEvent m = null;
-	     boolean inFlag=items(m,startD);
+    	String startD=start.getValue();
+	    boolean flag=true;	     
         int num=Integer.parseInt(txtorder.getText());      
         String directionW=direction.getValue();           
         if(num%2==0) {
@@ -145,7 +158,7 @@ public class MagicSquareController {
    	     alert.show();
    	     txtorder.setText("");
         } 
-        if(flag==true && inFlag==true) {
+        if(flag==true) {
    	    int[][]ma=objectMG.createdSquare(num,directionW,startD);
     	    for (int rowIndex = 0; rowIndex < num; rowIndex++) { 
     	        for (int colIndex = 0; colIndex < num; colIndex++) {  
@@ -157,7 +170,7 @@ public class MagicSquareController {
     	    
     	        }
     	    }
-    	    change();
+    	   change();
        }
     }
 }
