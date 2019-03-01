@@ -88,6 +88,7 @@ public class MagicSquareController {
         start.getItems().add("Right");
         start.getItems().add("Down");
         start.getItems().add("Left");
+        firstButton.setText("Continue");
         buttonCreate.setText("Continue");
    
     }
@@ -100,6 +101,9 @@ public class MagicSquareController {
         	firstButton.setVisible(false);
     	}catch(NullPointerException e) {
     		System.err.println("Please put a input to continue");
+    		buttonCreate.setVisible(false);
+    		direction.setVisible(false);
+    		txtorder.setText("");
     	}
     	
     }
